@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 
 import About from './components/About';
+import NotFound from './components/NotFound';
 import Pokedex from './components/Pokedex';
 import PokemonDetails from './components/PokemonDetails';
 import pokemonListData from './data';
@@ -36,7 +37,6 @@ class App extends Component {
             About
           </Link>
         </nav>
-
         {/* Coloque as rotas aqui.
         Lembre-se de utilizar o componente que faz apenas uma rota ser renderizada */}
 
@@ -60,6 +60,7 @@ class App extends Component {
               />
             )}
           />
+          <Route component={NotFound} />
         </Switch>
       </div>
     );
