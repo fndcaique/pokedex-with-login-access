@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 
-import pokemonListData from './data';
+import About from './components/About';
+import Login from './components/Login';
 import Pokedex from './components/Pokedex';
-import About from './components/About'
 import PokemonDetails from './components/PokemonDetails';
+import pokemonListData from './data';
 
 import './styles/App.css';
 
@@ -13,12 +14,17 @@ class App extends Component {
     super();
 
     this.state = {
+      username: '',
       pokemonList: pokemonListData,
     };
   }
 
+  login = (username) => {
+    this.setState({ username });
+  };
+
   render() {
-    const { pokemonList } = this.state;
+    const { pokemonList, username } = this.state;
 
     return (
       <div className="App">
@@ -40,11 +46,39 @@ class App extends Component {
         {/* Coloque as rotas aqui.
         Lembre-se de utilizar o componente que faz apenas uma rota ser renderizada */}
         <Switch>
-          <Route path="/" exact>
+          <Route
+            path="/"
+            exact
+          >
             <Pokedex pokemonList={pokemonList} />
           </Route>
-          <Route path="/about" component={ About }></Route>
-          <Route path="/pokemon/:id"render={(props)=><PokemonDetails {...props} pokemons={pokemonList}/>}/>
+          <Route
+            path="/about"
+            component={About}
+          ></Route>
+          <Route
+            path="/pokemon/:id"
+            render={(props) => {
+              if (username.length === 0) {
+                return <Redirect to="/login" />;
+              }
+              return (
+                <PokemonDetails
+                  {...props}
+                  pokemons={pokemonList}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/login"
+            render={(routeProps) => (
+              <Login
+                {...routeProps}
+                login={this.login}
+              />
+            )}
+          />
         </Switch>
       </div>
     );
