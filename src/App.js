@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import Pokedex from './components/Pokedex';
 
 import pokemonListData from './data';
+import Pokedex from './components/Pokedex';
+import About from './components/About'
 
 import './styles/App.css';
 
@@ -38,9 +39,10 @@ class App extends Component {
         {/* Coloque as rotas aqui.
         Lembre-se de utilizar o componente que faz apenas uma rota ser renderizada */}
         <Switch>
-          <Route path="/">
+          <Route path="/" exact>
             <Pokedex pokemonList={pokemonList} />
           </Route>
+          <Route path="/about" component={ About }></Route>
         </Switch>
       </div>
     );
